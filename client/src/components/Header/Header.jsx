@@ -5,10 +5,24 @@ import SearchBar from "./styled/SearchBar";
 import PictureLink from "./styled/PictureLink";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import React from "react";
+import { ModalHover } from 'react-modal-hover'
+import React, {useState} from "react";
+import {Modal} from 'react-bootstrap';
+import Submenu from './/styled/Submenu'
 
 function Header() {
+
+  const [profileHover, setprofileHover] = useState(false);
+
+  const handleHover=()=>{
+    setprofileHover(true);
+  }
+
+  const handleLeave=()=>{
+    setprofileHover(false);
+  }
+
+
   return (
     <div className="header_wraper">
       <HeaderStyled>
@@ -25,9 +39,14 @@ function Header() {
         <div className="right-items">
           <SearchBar className="search-bar" />
           <div className="profile-links">
-            <PictureLink icon="user" link="Profile" />
+            <div onMouseEnter={handleHover} onMouseLeave={handleLeave} className='dropdown'>
+              <PictureLink icon="user" link="Profile" />
+              <Submenu isHovering={profileHover}/>
+            </div>
+            <PictureLink icon="gamepad" link="Gamify" />
             <PictureLink icon="bookmark" link="Wishlist" />
             <PictureLink icon="shopping-bag" link="Bag" />
+
           </div>
         </div>
       </HeaderStyled>
