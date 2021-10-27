@@ -2,11 +2,11 @@ import React from 'react'
 import Header from '../components/Header/Header'
 import LoginBody from '../components/Login/LoginBody'
 
-const Login = () => {
+const Login = ({setAuthenticatedUser}) => {
     return (
         <div>
            <Header/> 
-           <LoginBody />
+           <LoginBody setAuthenticatedUser={setAuthenticatedUser}/>
         </div>
     )
 }

@@ -8,9 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ModalHover } from 'react-modal-hover'
 import React, {useState} from "react";
 import {Modal} from 'react-bootstrap';
-import Submenu from './/styled/Submenu'
+import Submenu from './styled/Submenu'
+import Greeting from './styled/Greeting'
+import {Link} from 'react-router-dom';
 
-function Header() {
+function Header({AuthenticatedUser, setAuthenticatedUser}) {
 
   const [profileHover, setprofileHover] = useState(false);
 
@@ -38,10 +40,11 @@ function Header() {
         </div>
         <div className="right-items">
           <SearchBar className="search-bar" />
+          <Greeting AuthenticatedUser={AuthenticatedUser}/>
           <div className="profile-links">
             <div onMouseEnter={handleHover} onMouseLeave={handleLeave} className='dropdown'>
               <PictureLink icon="user" link="Profile" />
-              <Submenu isHovering={profileHover}/>
+              <Submenu isHovering={profileHover} AuthenticatedUser={AuthenticatedUser} setAuthenticatedUser={setAuthenticatedUser}/>
             </div>
             <PictureLink icon="gamepad" link="Gamify" />
             <PictureLink icon="bookmark" link="Wishlist" />

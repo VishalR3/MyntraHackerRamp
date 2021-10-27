@@ -3,8 +3,13 @@ import Coin from "./routes/Coin";
 import Dice from "./routes/Dice";
 import Homepage from "./routes/Homepage"
 import Login from "./routes/Login"
+import Register from "./routes/Register"
+import {useState} from 'react';
 
 function App() {
+
+  const [AuthenticatedUser, setAuthenticatedUser] = useState({});
+
   return (
     <div className="App">
       <Router>
@@ -16,13 +21,13 @@ function App() {
             <Coin />
           </Route>
           <Route exact path="/">
-            <Homepage />
+            <Homepage AuthenticatedUser={AuthenticatedUser} setAuthenticatedUser={setAuthenticatedUser}/>
           </Route>
           <Route path="/login">
-            <Login />
+            <Login setAuthenticatedUser={setAuthenticatedUser}/>
           </Route>
-          <Route path="/Register">
-            Register
+          <Route path="/register">
+            <Register setAuthenticatedUser={setAuthenticatedUser}/>
           </Route>
         </Switch>
       </Router>

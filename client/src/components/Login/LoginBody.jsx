@@ -2,10 +2,10 @@ import React from 'react'
 import LoginBox from "./LoginBox"
 import "./Login.css"
 
-const LoginBody = () => {
+const LoginBody = ({setAuthenticatedUser}) => {
     return (
         <div className="container">
-            <LoginBox />
+            <LoginBox setAuthenticatedUser={setAuthenticatedUser}/>
         </div>
     )
 }

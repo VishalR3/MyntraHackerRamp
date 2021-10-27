@@ -1,24 +1,62 @@
 import React, {useState} from 'react'
 import './Login.css'
 import {Form, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 
-const LoginBox = () => {
+const LoginBox = ({setAuthenticatedUser}) => {
+
+    const history = useHistory();
     
-    const [email, setEmail] = useState("");
+    const [user, setUser] = useState({
+        username: "",
+        password: ""
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setUser({
+            ...user,
+            [name]:value
+        });
+    }
+
+    axios.defaults.withCredentials=true;
+    const headers = {
+        "Content-Type": "application/json"
+    }
+
+    const Login = () => {
+        const data=JSON.stringify(user)
+        axios.post("http://localhost:3001/login", data, headers)
+        .then((res) => {
+            alert(res.data.message);
+            setAuthenticatedUser(res.data.user);
+            console.log(res.data.user)
+            history.push('/');
+            //console.log(AuthenticatedUser);
+        })
+    
+    }
+
 
     return (
         <div className="box">
             <Form>
-                <div class="welcome-header">
-                    Login&nbsp;
-                    <span class="welcome-header-small">or&nbsp;</span>
-                    Signup
+                <div className="welcome-header">
+                    Login
                 </div>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control type="email" name="username" value={user.username} onChange={handleChange} placeholder="Enter email" />
                     <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                     </Form.Text>
+                    
+                </Form.Group>
+                    <Form.Control type="password" name="password" value={user.password} onChange={handleChange} placeholder="Enter Password" />
+                <Form.Group>
+
                 </Form.Group>
                 <br/>
 
@@ -28,10 +66,19 @@ const LoginBox = () => {
 
                 <br/>
 
-                <Button variant="dark" type="submit">
+                <Button variant="dark" onClick={Login}>
                     Continue
                 </Button>
             </Form>
+            <br/><br/>
+            <div className="welcome-header-small">
+                    New User? 
+                    <br/>
+                    <Button variant="dark" type="submit">
+                        <Link to="/register">SIGNUP</Link>
+                    </Button>
+            </div>
+
         </div>
     )
 }

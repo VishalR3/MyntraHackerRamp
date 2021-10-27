@@ -5,19 +5,40 @@ import "../Header.css"
 
 const Submenu = (props) => {
     const isHovering=props.isHovering;
+    const user=props.AuthenticatedUser
+
+    const handleLogout = () => {
+        props.setAuthenticatedUser([]);
+    }
 
     if(isHovering){
-        return (
-            <div className="dropdown-content">
-                <div>
-                    <h4><b>Welcome</b></h4>
-                    <h5>To access account and manage orders</h5>
+        if(Object.keys(user).length == 0){
+            return (
+                <div className="dropdown-content">
+                    <div>
+                        <h4><b>Welcome</b></h4>
+                        <h5>To access account and manage orders</h5>
+                    </div>
+                    <div className="buttonDiv">
+                        <Button className="LoginBtn" variant="outline-light"><Link to="/login">login/signup</Link></Button>
+                    </div>
                 </div>
-                <div className="buttonDiv">
-                    <Button className="LoginBtn" variant="outline-light"><Link to="/login">login/signup</Link></Button>
+            )
+        }
+        else{
+            
+            return (
+                <div className="dropdown-content">
+                    <div>
+                        <h4><b>Welcome</b></h4>
+                        <h5>To access account and manage orders</h5>
+                    </div>
+                    <div className="buttonDiv">
+                        <Button className="LoginBtn" variant="outline-light"onClick={handleLogout}>logout</Button>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
     else{
         return (

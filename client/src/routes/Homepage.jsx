@@ -8,10 +8,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 
-const Homepage = () => {
+const Homepage = ({AuthenticatedUser, setAuthenticatedUser}) => {
     return (
         <div className="App container-fluid">
-        <Header/>
+        <Header AuthenticatedUser={AuthenticatedUser} setAuthenticatedUser={setAuthenticatedUser}/>
         
          <CrouselView/>
          <DealCardViewPort/>
