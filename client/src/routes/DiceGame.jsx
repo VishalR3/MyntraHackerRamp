@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dice from "./dice";
+import Dice from "./Dice";
 import DiceChoose from "./DiceChoose";
 
 export default function DiceGame() {

@@ -8,24 +8,29 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import DiceChoose from "./routes/DiceChoose";
 import DiceGame from "./routes/DiceGame";
-
-import Homepage from "./routes/Homepage"
-import Login from "./routes/Login"
-import Register from "./routes/Register"
 import Gamify from "./routes/Gamify"
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 
 function App() {
   const [AuthenticatedUser, setAuthenticatedUser] = useState({});
 
+  useEffect(() => {
+    const user = window.localStorage.getItem("userData");
+    setAuthenticatedUser(JSON.parse(user));
+  }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem("userData", JSON.stringify(AuthenticatedUser));
+  })
+
   return (
     <div className="App">
       <Router>
         <Switch>
-          /* <Route path="/chooseDice">
+          <Route path="/chooseDice">
             <DiceChoose />
-          </Route> */
+          </Route> 
           <Route path="/dice">
             <DiceGame />
           </Route>
