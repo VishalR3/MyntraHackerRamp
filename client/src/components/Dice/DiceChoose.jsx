@@ -28,11 +28,6 @@ export default function DiceChoose({ selectedValue, setSelectedValue }) {
             </div>
           ))}
         </div>
-        {/* <div className="footerRow text-center">
-          <Link to="/dice" className="btn btn-success px-5">
-            Confirm
-          </Link>
-        </div> */}
       </div>
     </>
   );

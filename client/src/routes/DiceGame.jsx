@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Dice from "./Dice";
-import DiceChoose from "./DiceChoose";
+import Dice from "../components/Dice/Dice";
+import DiceChoose from "../components/Dice/DiceChoose";
 
 export default function DiceGame() {
   const [selectedValue, setSelectedValue] = useState(0);

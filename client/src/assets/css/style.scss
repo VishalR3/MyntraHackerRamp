@@ -21,3 +21,15 @@ $shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
   border-color: rgb(243, 141, 25);
   box-shadow: $shadow;
 }
+.gameStat {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+  // height: 200px;
+  background: #fff;
+  border-radius: 16px;
+  border: none;
+  padding: 12px;
+  user-select: none;
+}

@@ -8,6 +8,8 @@ import * as OIMO from "oimo";
 
 export default function Dice({ selectedValue, setSelectedValue }) {
   const diceRef = useRef(null);
+  const [diceValue, setDiceValue] = useState(0);
+  const [win, setWin] = useState(-1);
   useEffect(() => {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -180,7 +182,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
     // arrowHelper.visible = false;
     // scene.add(arrowHelper);
     let isGameOver = false;
-
+    let topValue;
     function castRay() {
       let direction = new THREE.Vector3(0, -1, 0);
       raycaster.set(
@@ -200,39 +202,42 @@ export default function Dice({ selectedValue, setSelectedValue }) {
       // arrowHelper.visible = true;
 
       // calculate objects intersecting the picking ray
-      let diceValue;
       if (obj) {
         let intersects = raycaster.intersectObjects(obj.children, true);
 
         // console.log(intersects);
-        for (let i = 0; i < intersects.length; i++) {
-          if (i === 0) {
-            if (intersects[i].object.name.includes("Dot")) {
-              diceValue = intersects[i].object.name[3];
-              console.log(`You Got ${diceValue}`);
-              if (diceValue === selectedValue) {
-                console.log(`You Win`);
-              } else {
-                console.log(`You Lose`);
-              }
-            }
-          } else if (i === 3) {
-            if (intersects[i].object.name.includes("Dot")) {
-              diceValue = 7 - Number(intersects[i].object.name[3]);
-              console.log(`You Got ${diceValue}`);
-              if (diceValue === selectedValue) {
-                console.log(`You Win`);
-              } else {
-                console.log(`You Lose`);
-              }
-            }
+        if (intersects[0].object.name.includes("Dot")) {
+          topValue = intersects[0].object.name[3];
+          setDiceValue(topValue);
+          console.log(`You Got ${topValue}`);
+          if (topValue === selectedValue) {
+            console.log(`You Win`);
+            setWin(1);
+          } else {
+            setWin(0);
+            console.log(`You Lose`);
           }
-          isGameOver = true;
-          // destroy();
-          setSelectedValue(0);
+        } else if (intersects[3].object.name.includes("Dot")) {
+          topValue = 7 - Number(intersects[3].object.name[3]);
+          setDiceValue(topValue);
+          console.log(`You Got ${topValue}`);
+          if (topValue === selectedValue) {
+            setWin(1);
+            console.log(`You Win`);
+          } else {
+            setWin(0);
+            console.log(`You Lose`);
+          }
         }
+
+        isGameOver = true;
+        // destroy();
+        setTimeout(() => {
+          setSelectedValue(0);
+        }, 1000);
       }
     }
+
     let loaded = false;
     // window.addEventListener("mousemove", castRay, false);
     let prevSleepState = 0;
@@ -252,9 +257,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
         prevSleepState = 1;
         console.log("Now Resting");
         if (loaded) {
-          // setInterval(() => {
           castRay();
-          // }, 100);
         } else {
           loaded = true;
         }
@@ -284,6 +287,23 @@ export default function Dice({ selectedValue, setSelectedValue }) {
   }, []);
   return (
     <>
+      <div className="gameStat card">
+        <div className="card-body">
+          {/* <div className="roundNo">Round: {round}</div> */}
+          {/* <div className="winCount">Wins: {winCount}</div> */}
+          <div className="betValue">You Chose {selectedValue}</div>
+          {diceValue !== 0 ? (
+            <div className="coinValue">You Got {diceValue}</div>
+          ) : (
+            ""
+          )}
+          {win !== -1 ? (
+            <div className="winStat">You {win === 0 ? "Lose" : "Win"}</div>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
       <canvas ref={diceRef} className="dice"></canvas>
     </>
   );
