@@ -78,7 +78,7 @@ const RegisterBox = ({setAuthenticatedUser}) => {
                 <br/>
 
                 <Button variant="dark" onClick={register}>
-                    Continue
+                    CONTINUE
                 </Button>
             </Form>
         </div>

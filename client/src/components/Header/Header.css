@@ -3,6 +3,10 @@ body{
     
 }
 
+.header_wraper{
+    padding:1%;
+}
+
 .left-items{
     display: flex;
     align-items: center;
@@ -95,4 +99,3 @@ body{
 
 
 }
-

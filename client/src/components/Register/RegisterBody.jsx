@@ -4,7 +4,7 @@ import "./Register.css"
 
 const RegisterBody = ({setAuthenticatedUser}) => {
     return (
-        <div className="container">
+        <div className="contain">
             <RegisterBox setAuthenticatedUser={setAuthenticatedUser}/>
         </div>
     )

@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./assets/css/style.css";
+import "./App.css"
 import Homepage from "./routes/Homepage";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import DiceGame from "./routes/DiceGame";
 import Gamify from "./routes/Gamify";
+import Recycle from "./routes/Recycle";
 import { useState, useEffect } from "react";
 import CoinGame from "./routes/CoinGame";
 
@@ -45,6 +47,9 @@ function App() {
           </Route>
           <Route path="/gamify">
             <Gamify />
+          </Route>
+          <Route>
+            <Recycle />
           </Route>
         </Switch>
       </Router>

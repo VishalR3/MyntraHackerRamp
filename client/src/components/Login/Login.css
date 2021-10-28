@@ -1,20 +1,21 @@
-.container{
-    background-image: linear-gradient( #f7d0cd, white);
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-top: 5%;
+.contain{
+    align-items: center;
+    background-image: linear-gradient( #f6e8e7, #fcf0e4);
 }
 
-body{
+.contain{
+    body {
     font-family: WhitneySSm,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
+}
 }
 
 .box{
     background-color: white;
     padding: 3%;
-    height: 600px;
-    width: 400px;
+    /* height: 600px;
+    width: 400px; */
+    margin-left: 400px;
 }
 
 .welcome-header {
@@ -32,3 +33,16 @@ body{
     font-weight: 400;
     color: #535766;
 }
+
+button{
+    background-color: #F5496B !important;
+    color: white !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 12px  !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 16px !important;
+}
+

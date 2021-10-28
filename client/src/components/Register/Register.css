@@ -1,20 +1,22 @@
-.container{
-    background-image: linear-gradient( #f7d0cd, white);
+.contain{
+    background-image: linear-gradient(#f6e8e7, #fcf0e4);
     padding-left: 20%;
     padding-right: 20%;
     padding-top: 5%;
+    position: relative;
 }
 
-body{
+.contain{body{
     font-family: WhitneySSm,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
-}
+}}
 
 .box{
     background-color: white;
     padding: 3%;
     height: 600px;
     width: 400px;
+    margin-left: 400px;
 }
 
 .welcome-header {

@@ -3,6 +3,7 @@ import './Login.css'
 import {Form, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import image from "../../assets/LoginMynImg.webp"
 import {useHistory} from 'react-router-dom';
 
 const LoginBox = ({setAuthenticatedUser}) => {
@@ -40,9 +41,13 @@ const LoginBox = ({setAuthenticatedUser}) => {
     
     }
 
+    const redirectSignup = () => {
+        history.push("/register")
+    }
 
     return (
         <div className="box">
+            
             <Form>
                 <div className="welcome-header">
                     Login
@@ -67,15 +72,15 @@ const LoginBox = ({setAuthenticatedUser}) => {
                 <br/>
 
                 <Button variant="dark" onClick={Login}>
-                    Continue
+                    CONTINUE
                 </Button>
             </Form>
             <br/><br/>
             <div className="welcome-header-small">
                     New User? 
                     <br/>
-                    <Button variant="dark" type="submit">
-                        <Link to="/register">SIGNUP</Link>
+                    <Button variant="dark" onClick={redirectSignup}>
+                        SIGNUP
                     </Button>
             </div>
 

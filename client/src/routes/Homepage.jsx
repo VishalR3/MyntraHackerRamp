@@ -18,10 +18,11 @@ const Homepage = ({ AuthenticatedUser, setAuthenticatedUser }) => {
 
       <CrouselView />
       <DealCardViewPort />
-
+      <br/><br/><br/><br/>
       <h2>BRANDS IN FOCUS</h2>
+      <br/><br/>
       <p>Show some brand love</p>
-
+      <br/><br/><br/><br/>
       <BrandInFocusViewPort />
     </div>
   );

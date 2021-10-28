@@ -2,12 +2,19 @@ import React from 'react'
 import {Button, Dropdown} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 import "../Header.css"
+import {useHistory} from 'react-router-dom';
 
 const Submenu = (props) => {
     const isHovering=props.isHovering;
 
     const handleLogout = () => {
         props.setAuthenticatedUser({});
+    }
+
+    const history = useHistory();
+
+    const redirectLogin = () => {
+        history.push('/login')
     }
 
     if(isHovering){
@@ -32,7 +39,7 @@ const Submenu = (props) => {
                         <h5>To access account and manage orders</h5>
                     </div>
                     <div className="buttonDiv">
-                        <Button className="LoginBtn" variant="outline-light"><Link to="/login">login/signup</Link></Button>
+                        <Button className="LoginBtn" variant="outline-light" onClick={redirectLogin}>login/signup</Button>
                     </div>
                 </div>
             )
