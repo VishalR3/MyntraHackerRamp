@@ -3,16 +3,12 @@ import {Button, Dropdown} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 
 
-const Greeting = ({AuthenticatedUser}) => {
-    const mustCall = () => {
-        console.log(AuthenticatedUser);
-    }
-    mustCall();
-    const user=AuthenticatedUser;
-    if((user)){
+const Greeting = (props) => {
+
+    if(props.AuthenticatedUser && props.AuthenticatedUser.hasOwnProperty('name')){
         return(
             <div>
-                {AuthenticatedUser.name}
+                Hi {props.AuthenticatedUser.name}!
             </div>
         )
     }

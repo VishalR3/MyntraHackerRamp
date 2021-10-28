@@ -4,8 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const pictureLinkComp = function (props) {
+  
+  var flag=false;
+  if(props.AuthenticatedUser && props.AuthenticatedUser.hasOwnProperty('name')){
+    flag=true;
+  }
+  console.log(props.AuthenticatedUser)
     return (
-    
     
     <div>
        { console.log(arguments)}
@@ -13,8 +18,8 @@ const pictureLinkComp = function (props) {
     <FontAwesomeIcon  icon={props.icon}/>
     </div>
   
-    <a  href={props.link} className={props.className}>
-    {props.link}
+    <a  href={ (flag) ? props.link : '/login' } className={props.className}>
+    {props.name}
     </a>
   
     </div>

@@ -6,9 +6,15 @@ import Dice from "./routes/Dice";
 import Homepage from "./routes/Homepage";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-import { useState } from "react";
 import DiceChoose from "./routes/DiceChoose";
 import DiceGame from "./routes/DiceGame";
+
+import Homepage from "./routes/Homepage"
+import Login from "./routes/Login"
+import Register from "./routes/Register"
+import Gamify from "./routes/Gamify"
+import {useState} from 'react';
+
 
 function App() {
   const [AuthenticatedUser, setAuthenticatedUser] = useState({});
@@ -17,9 +23,9 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          {/* <Route path="/chooseDice">
+          /* <Route path="/chooseDice">
             <DiceChoose />
-          </Route> */}
+          </Route> */
           <Route path="/dice">
             <DiceGame />
           </Route>
@@ -37,6 +43,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register setAuthenticatedUser={setAuthenticatedUser} />
+          </Route>
+          <Route path="/gamify">
+            <Gamify/>
           </Route>
         </Switch>
       </Router>
