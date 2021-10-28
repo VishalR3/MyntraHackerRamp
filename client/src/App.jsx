@@ -4,6 +4,7 @@ import Dice from "./routes/Dice";
 import Homepage from "./routes/Homepage"
 import Login from "./routes/Login"
 import Register from "./routes/Register"
+import Gamify from "./routes/Gamify"
 import {useState} from 'react';
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register setAuthenticatedUser={setAuthenticatedUser}/>
+          </Route>
+          <Route path="/gamify">
+            <Gamify/>
           </Route>
         </Switch>
       </Router>

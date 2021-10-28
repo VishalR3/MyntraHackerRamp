@@ -43,12 +43,12 @@ function Header({AuthenticatedUser, setAuthenticatedUser}) {
           <Greeting AuthenticatedUser={AuthenticatedUser}/>
           <div className="profile-links">
             <div onMouseEnter={handleHover} onMouseLeave={handleLeave} className='dropdown'>
-              <PictureLink icon="user" link="Profile" />
+              <PictureLink icon="user" link="Profile" name="Profile" AuthenticatedUser={AuthenticatedUser}/>
               <Submenu isHovering={profileHover} AuthenticatedUser={AuthenticatedUser} setAuthenticatedUser={setAuthenticatedUser}/>
             </div>
-            <PictureLink icon="gamepad" link="Gamify" />
-            <PictureLink icon="bookmark" link="Wishlist" />
-            <PictureLink icon="shopping-bag" link="Bag" />
+            <PictureLink icon="gamepad" link="/gamify" AuthenticatedUser={AuthenticatedUser} name="Gamify" />
+            <PictureLink icon="bookmark" link="/" AuthenticatedUser={AuthenticatedUser} name="Wishlist" />
+            <PictureLink icon="shopping-bag" link="/" AuthenticatedUser={AuthenticatedUser} name="Bag" />
 
           </div>
         </div>
