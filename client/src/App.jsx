@@ -1,16 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./assets/css/style.css";
-import Coin from "./routes/Coin";
-import Dice from "./routes/Dice";
 import Homepage from "./routes/Homepage";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-import DiceChoose from "./routes/DiceChoose";
 import DiceGame from "./routes/DiceGame";
-import Gamify from "./routes/Gamify"
-import {useState, useEffect} from 'react';
-
+import Gamify from "./routes/Gamify";
+import { useState, useEffect } from "react";
+import CoinGame from "./routes/CoinGame";
 
 function App() {
   const [AuthenticatedUser, setAuthenticatedUser] = useState({});
@@ -18,24 +15,21 @@ function App() {
   useEffect(() => {
     const user = window.localStorage.getItem("userData");
     setAuthenticatedUser(JSON.parse(user));
-  }, [])
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("userData", JSON.stringify(AuthenticatedUser));
-  })
+  });
 
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/chooseDice">
-            <DiceChoose />
-          </Route> 
           <Route path="/dice">
             <DiceGame />
           </Route>
           <Route path="/coin">
-            <Coin />
+            <CoinGame />
           </Route>
           <Route exact path="/">
             <Homepage
@@ -50,7 +44,7 @@ function App() {
             <Register setAuthenticatedUser={setAuthenticatedUser} />
           </Route>
           <Route path="/gamify">
-            <Gamify/>
+            <Gamify />
           </Route>
         </Switch>
       </Router>

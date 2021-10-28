@@ -1,14 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { gsap } from "gsap";
 import * as OIMO from "oimo";
-// import diceModel from "../assets/models/dice.glb";
 
-export default function Coin() {
+export default function Coin({ selectedValue, setSelectedValue }) {
   const diceRef = useRef(null);
-  const topCameraRef = useRef(null);
+  const [coinValue, setCoinValue] = useState(-1);
+  const [win, setWin] = useState(-1);
   useEffect(() => {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -160,10 +160,83 @@ export default function Coin() {
     //Controls
     const controls = new OrbitControls(camera, domElement);
     controls.update();
+
+    //RayCaster
+
+    let raycaster = new THREE.Raycaster();
+    // let arrowHelper = new THREE.ArrowHelper(
+    //   raycaster.ray.direction,
+    //   raycaster.ray.origin,
+    //   12,
+    //   0xff0000
+    // );
+    // arrowHelper.visible = false;
+    // scene.add(arrowHelper);
+    let isGameOver = false;
+    let winner = false;
+
+    function castRay() {
+      let direction = new THREE.Vector3(0, -1, 0);
+      raycaster.set(
+        new THREE.Vector3(
+          coin.position.x,
+          coin.position.y + 2,
+          coin.position.z
+        ),
+        direction.normalize()
+      );
+      // arrowHelper.setDirection(raycaster.ray.direction);
+      // arrowHelper.position.set(
+      //   coin.position.x,
+      //   coin.position.y + 1,
+      //   coin.position.z
+      // );
+      // arrowHelper.visible = true;
+
+      // calculate objects intersecting the picking ray
+      if (obj) {
+        let intersects = raycaster.intersectObjects(obj.children, true);
+        if (intersects[0].object.name.includes("Tail")) {
+          console.log(`You Got Tail`);
+          setCoinValue(1);
+          if (selectedValue === 1) {
+            console.log(`You Win`);
+            setWin(1);
+            winner = true;
+          } else {
+            setWin(0);
+            console.log(`You Lose`);
+          }
+        } else {
+          setCoinValue(0);
+          console.log("You Got Head");
+          if (selectedValue === 0) {
+            setWin(1);
+            winner = true;
+            console.log(`You Win`);
+          } else {
+            setWin(0);
+            console.log(`You Lose`);
+          }
+        }
+
+        isGameOver = true;
+        // setTimeout(() => {
+        // if (winner) {
+        //   setWinCount(winCount + 1);
+        // }
+        // setRound(round + 1);
+        setSelectedValue(-1);
+        // }, 5000);
+      }
+    }
+    let loaded = false;
     let prevSleepState = 0;
     //Animate Function
     function animate() {
-      requestAnimationFrame(animate);
+      if (!isGameOver) {
+        requestAnimationFrame(animate);
+      }
       controls.update();
       world.step();
       if (obj) {
@@ -174,6 +247,11 @@ export default function Coin() {
       if (coin.sleeping && prevSleepState === 0) {
         prevSleepState = 1;
         console.log("Now Resting");
+        if (loaded) {
+          castRay();
+        } else {
+          loaded = true;
+        }
       } else if (!coin.sleeping && prevSleepState === 1) {
         console.log("Started Moving");
         prevSleepState = 0;
@@ -186,7 +264,27 @@ export default function Coin() {
   }, []);
   return (
     <>
-      {/* <canvas ref={topCameraRef} className="topCameraView"></canvas> */}
+      <div className="gameStat card">
+        <div className="card-body">
+          {/* <div className="roundNo">Round: {round}</div> */}
+          {/* <div className="winCount">Wins: {winCount}</div> */}
+          <div className="betValue">
+            You Chose {selectedValue === 0 ? "Head" : "Tail"}
+          </div>
+          {coinValue !== -1 ? (
+            <div className="coinValue">
+              You Got {coinValue === 0 ? "Head" : "Tail"}
+            </div>
+          ) : (
+            ""
+          )}
+          {win !== -1 ? (
+            <div className="winStat">You {win === 0 ? "Lose" : "Win"}</div>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
       <canvas ref={diceRef} className="dice"></canvas>
     </>
   );
