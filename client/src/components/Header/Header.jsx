@@ -40,7 +40,7 @@ function Header({AuthenticatedUser, setAuthenticatedUser}) {
         </div>
         <div className="right-items">
           <SearchBar className="search-bar" />
-          <Greeting AuthenticatedUser={AuthenticatedUser}/>
+          {/* <Greeting AuthenticatedUser={AuthenticatedUser}/> */}
           <div className="profile-links">
             <div onMouseEnter={handleHover} onMouseLeave={handleLeave} className='dropdown'>
               <PictureLink icon="user" link="Profile" name="Profile" AuthenticatedUser={AuthenticatedUser}/>

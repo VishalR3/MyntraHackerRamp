@@ -8,6 +8,7 @@ import Register from "./routes/Register";
 import DiceGame from "./routes/DiceGame";
 import Gamify from "./routes/Gamify";
 import Recycle from "./routes/Recycle";
+import MyCoins from "./routes/MyCoins"
 import { useState, useEffect } from "react";
 import CoinGame from "./routes/CoinGame";
 
@@ -48,7 +49,11 @@ function App() {
           <Route path="/gamify">
             <Gamify />
           </Route>
-          <Route>
+          <Route path='/myCoins'>
+            <MyCoins AuthenticatedUser={AuthenticatedUser}
+            setAuthenticatedUser={setAuthenticatedUser}/>
+          </Route>
+          <Route path='/recycle'>
             <Recycle />
           </Route>
         </Switch>
