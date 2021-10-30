@@ -13,10 +13,10 @@ const MyCoins = (props) => {
             <hr/>
             <div style={{
             paddingTop:20,
-            paddingLeft:450
+            paddingLeft:400
             }}>
                 <div style={{
-                    width:800
+                    width:1000
                 }}>
                     <div style={{
                         padding:5,
@@ -26,12 +26,12 @@ const MyCoins = (props) => {
                         <h5>{user.name}</h5>
                     </div>
                     <hr />
-                    <div className="col-md-3" style={{
+                    <div className="col-md-2" style={{
                         borderRight: '1px solid #d4d5d9'
                     }}>
                         <Menu />
                     </div>
-                    <div className="col-md-9">
+                    <div className="col-md-10">
                         <CoinData user={user} setUser={setUser}/>
                     </div>
                 </div>

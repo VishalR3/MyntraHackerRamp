@@ -153,6 +153,33 @@ app.post('/updateCoins', (req, res) => {
     });
 });
 
+app.post('/transactions', (req, res) => {
+  console.log(req.body);
+  const userData=JSON.parse(Object.keys(req.body)[0]);
+  //const userData=req.body;
+  const username=userData['username'];
+  Transaction.find({username: username}, (err, doc) =>{
+    if(doc){
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.setHeader('Access-Control-Allow-Credentials', true)
+      res.json({
+          success: true, 
+          message: 'Transaction Logs successfully fetched', 
+          doc: doc
+            });
+    }
+    else{
+      res.statusCode=500;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.setHeader('Access-Control-Allow-Credentials', true)
+      res.json({message: err});
+    }
+  })
+})
+
 app.listen(3001, ()=>{
     console.log("Server listening at port: 3001")
 })

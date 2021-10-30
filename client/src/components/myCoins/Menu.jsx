@@ -2,7 +2,7 @@ import React from 'react'
 
 const Menu = () => {
     return (
-        <div style={{fontSize:15, fontFamily:'Whitney', opacity:0.9}}>
+        <div style={{fontSize:15, opacity:0.9}}>
            <div style={{opacity:0.9, padding:5, textAlign:'left'}}>
                Overview
             </div>
