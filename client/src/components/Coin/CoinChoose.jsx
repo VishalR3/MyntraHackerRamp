@@ -1,5 +1,13 @@
+import { useDispatch } from "react-redux";
+import { incrementRound } from "../../utils/features/gameSlice";
+
 export default function CoinChoose({ selectedValue, setSelectedValue }) {
   const coinValues = ["Head", "Tail"];
+  const dispatch = useDispatch();
+  const StartRound = (value) => {
+    dispatch(incrementRound());
+    setSelectedValue(value);
+  };
   return (
     <>
       <div className="container mt-3">
@@ -11,7 +19,7 @@ export default function CoinChoose({ selectedValue, setSelectedValue }) {
             <div
               className="col-lg-3 col-sm-6 cursor-pointer"
               key={index}
-              onClick={() => setSelectedValue(index)}
+              onClick={() => StartRound(index)}
             >
               <div
                 className={`card diceValueCard place-center mb-3 ${

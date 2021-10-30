@@ -4,11 +4,16 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { gsap } from "gsap";
 import * as OIMO from "oimo";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementWinCount } from "../../utils/features/gameSlice";
 
 export default function Coin({ selectedValue, setSelectedValue }) {
   const diceRef = useRef(null);
   const [coinValue, setCoinValue] = useState(-1);
   const [win, setWin] = useState(-1);
+  const rounds = useSelector((state) => state.game.rounds);
+  const winCount = useSelector((state) => state.game.winCount);
+  const dispatch = useDispatch();
   useEffect(() => {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -63,7 +68,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
      */
     let obj;
     const loader = new GLTFLoader();
-    loader.load("./models/coin.glb", (gltf) => {
+    loader.load("./models/Coin.glb", (gltf) => {
       obj = gltf.scene;
       obj.children = obj.children.map((child) => {
         if (child.type === "Mesh") {
@@ -74,7 +79,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
       });
       scene.add(obj);
     });
-    document.addEventListener("dblclick", () => {
+    const flipCoin = () => {
       if (Math.hypot(coin.position.x - 0, coin.position.z - 0) > 3) {
         coin.position.x = 0;
         coin.position.z = 0;
@@ -84,7 +89,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
         y: 2,
       });
       coin.angularVelocity.set(Math.random() * 25 + Math.random() * 50, 0, 0);
-    });
+    };
 
     //Cube
     // const geometry = new THREE.BoxBufferGeometry(0.6, 0.06, 0.6);
@@ -173,7 +178,6 @@ export default function Coin({ selectedValue, setSelectedValue }) {
     // arrowHelper.visible = false;
     // scene.add(arrowHelper);
     let isGameOver = false;
-    let winner = false;
 
     function castRay() {
       let direction = new THREE.Vector3(0, -1, 0);
@@ -202,7 +206,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
           if (selectedValue === 1) {
             console.log(`You Win`);
             setWin(1);
-            winner = true;
+            dispatch(incrementWinCount());
           } else {
             setWin(0);
             console.log(`You Lose`);
@@ -212,7 +216,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
           console.log("You Got Head");
           if (selectedValue === 0) {
             setWin(1);
-            winner = true;
+            dispatch(incrementWinCount());
             console.log(`You Win`);
           } else {
             setWin(0);
@@ -221,13 +225,10 @@ export default function Coin({ selectedValue, setSelectedValue }) {
         }
 
         isGameOver = true;
-        // setTimeout(() => {
-        // if (winner) {
-        //   setWinCount(winCount + 1);
-        // }
-        // setRound(round + 1);
-        setSelectedValue(-1);
-        // }, 5000);
+        document.removeEventListener("dblclick", flipCoin);
+        setTimeout(() => {
+          setSelectedValue(-1);
+        }, 1000);
       }
     }
     let loaded = false;
@@ -250,6 +251,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
         if (loaded) {
           castRay();
         } else {
+          document.addEventListener("dblclick", flipCoin);
           loaded = true;
         }
       } else if (!coin.sleeping && prevSleepState === 1) {
@@ -266,8 +268,8 @@ export default function Coin({ selectedValue, setSelectedValue }) {
     <>
       <div className="gameStat card">
         <div className="card-body">
-          {/* <div className="roundNo">Round: {round}</div> */}
-          {/* <div className="winCount">Wins: {winCount}</div> */}
+          <div className="roundNo">Round: {rounds}</div>
+          <div className="winCount">Wins: {winCount}</div>
           <div className="betValue">
             You Chose {selectedValue === 0 ? "Head" : "Tail"}
           </div>

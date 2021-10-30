@@ -1,8 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { incrementRound } from "../../utils/features/gameSlice";
 
 export default function DiceChoose({ selectedValue, setSelectedValue }) {
   const diceValues = [1, 2, 3, 4, 5, 6];
+  const dispatch = useDispatch();
+  const StartRound = (value) => {
+    dispatch(incrementRound());
+    setSelectedValue(value);
+  };
   return (
     <>
       <div className="container mt-3">
@@ -14,7 +19,7 @@ export default function DiceChoose({ selectedValue, setSelectedValue }) {
             <div
               className="col-lg-3 col-sm-6 cursor-pointer"
               key={value}
-              onClick={() => setSelectedValue(value)}
+              onClick={() => StartRound(value)}
             >
               <div
                 className={`card diceValueCard place-center mb-3 ${
