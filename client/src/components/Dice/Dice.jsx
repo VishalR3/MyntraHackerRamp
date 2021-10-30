@@ -4,12 +4,18 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { gsap } from "gsap";
 import * as OIMO from "oimo";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { incrementWinCount } from "../../utils/features/gameSlice";
 // import diceModel from "../assets/models/dice.glb";
 
 export default function Dice({ selectedValue, setSelectedValue }) {
   const diceRef = useRef(null);
   const [diceValue, setDiceValue] = useState(0);
   const [win, setWin] = useState(-1);
+  const rounds = useSelector((state) => state.game.rounds);
+  const winCount = useSelector((state) => state.game.winCount);
+  const dispatch = useDispatch();
   useEffect(() => {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -68,7 +74,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
      */
     let obj;
     let loader = new GLTFLoader();
-    loader.load("./models/dice.glb", (gltf) => {
+    loader.load("./models/Dice.glb", (gltf) => {
       obj = gltf.scene;
       obj.children = obj.children.map((child) => {
         if (child.type === "Mesh") {
@@ -79,7 +85,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
       });
       scene.add(obj);
     });
-    document.addEventListener("dblclick", () => {
+    const throwDice = () => {
       if (Math.hypot(dice.position.x - 0, dice.position.z - 0) > 3) {
         dice.position.x = 0;
         dice.position.z = 0;
@@ -93,7 +99,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
         Math.random() * 5 + Math.random() * 10,
         Math.random() * 40 + Math.random() * 10
       );
-    });
+    };
 
     //Cube
     // let geometry = new THREE.BoxBufferGeometry(0.3, 0.3, 0.3);
@@ -213,6 +219,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
           if (topValue === selectedValue) {
             console.log(`You Win`);
             setWin(1);
+            dispatch(incrementWinCount());
           } else {
             setWin(0);
             console.log(`You Lose`);
@@ -223,6 +230,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
           console.log(`You Got ${topValue}`);
           if (topValue === selectedValue) {
             setWin(1);
+            dispatch(incrementWinCount());
             console.log(`You Win`);
           } else {
             setWin(0);
@@ -231,6 +239,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
         }
 
         isGameOver = true;
+        document.removeEventListener("dblclick", throwDice);
         // destroy();
         setTimeout(() => {
           setSelectedValue(0);
@@ -259,6 +268,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
         if (loaded) {
           castRay();
         } else {
+          document.addEventListener("dblclick", throwDice);
           loaded = true;
         }
       } else if (!dice.sleeping && prevSleepState === 1) {
@@ -289,8 +299,8 @@ export default function Dice({ selectedValue, setSelectedValue }) {
     <>
       <div className="gameStat card">
         <div className="card-body">
-          {/* <div className="roundNo">Round: {round}</div> */}
-          {/* <div className="winCount">Wins: {winCount}</div> */}
+          <div className="roundNo">Round: {rounds}</div>
+          <div className="winCount">Wins: {winCount}</div>
           <div className="betValue">You Chose {selectedValue}</div>
           {diceValue !== 0 ? (
             <div className="coinValue">You Got {diceValue}</div>
