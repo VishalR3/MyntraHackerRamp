@@ -37,7 +37,7 @@ const Submenu = (props) => {
                         <hr />
                         <h5 style={{opacity:0.8}}>Myntra Credits</h5>
                         <h5 style={{opacity:0.8}}>Coupons</h5>
-                        <h5 style={{opacity:0.8}} onClick={redirectCoinsData}>Coins</h5>
+                        <h5 style={{opacity:0.8}} onClick={redirectCoinsData} style={{cursor:'pointer'}}>Coins</h5>
                         <hr />
                         <h5 style={{opacity:0.8}}>Edit Profile</h5>
                     </div>

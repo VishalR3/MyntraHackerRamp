@@ -3,6 +3,8 @@ var cors = require('cors')
 const mongoose = require('mongoose');
 const mongoPath = 'mongodb+srv://saumya:IxQAbMDG8SKptP7x@cluster0.7howf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 const User=require('./models/user')
+const Transaction=require('./models/transaction');
+const { VariantAlsoNegotiates } = require('http-errors');
 
 var options = {
   useNewUrlParser: true,
@@ -35,7 +37,7 @@ app.post('/signup', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.setHeader('Access-Control-Allow-Credentials', true)
-        res.json({err: err});
+        res.json({message: "This email already exists!"});
     }
     else{
       const user = new User({
@@ -107,6 +109,49 @@ app.post('/login', (req, res) => {
     })
     console.log("finish")
 })
+
+app.post('/updateCoins', (req, res) => {
+    console.log(req.body)
+    ///const userData=JSON.parse(Object.keys(req.body)[0]);
+    userData=req.body;
+    const username=userData["username"];
+    const updatedCoins=userData["coins"];
+    const description=userData["description"]
+    const debit=userData["debit"];
+    const credit=userData["credit"];
+    const filter={username: username};
+    const update={coins: updatedCoins};
+
+    User.findOneAndUpdate (filter, update, (err, user) => {
+      if(user){
+            const transaction=new Transaction({
+            username: username,
+            credit: credit,
+            debit: debit,
+            balance: Number(updatedCoins),
+            date: Date(),
+            description: "You "+description["stat"]+" in "+description["game"]+" game"
+          })
+          transaction.save((err) => {
+            if(err){
+              User.findOneAndUpdate({username:username}, {coins: presentCoins})
+              res.statusCode=500;
+              res.setHeader('Content-Type', 'application/json');
+              res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+              res.setHeader('Access-Control-Allow-Credentials', true)
+              res.json({message: err});
+            }
+            else{
+              res.statusCode=200;
+              res.setHeader('Content-Type', 'application/json');
+              res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+              res.setHeader('Access-Control-Allow-Credentials', true)
+              res.json({message: "Coins Updated"});
+            }
+          }); 
+        }
+    });
+});
 
 app.listen(3001, ()=>{
     console.log("Server listening at port: 3001")
