@@ -13,7 +13,9 @@ const MyCoins = (props) => {
             <hr/>
             <div style={{
             paddingTop:20,
-            paddingLeft:400
+            paddingLeft:'10%',
+            paddingRight:'10%',
+            paddingBottom:'10%'
             }}>
                 <div style={{
                     width:1000

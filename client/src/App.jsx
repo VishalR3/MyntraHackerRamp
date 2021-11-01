@@ -54,7 +54,8 @@ function App() {
             setAuthenticatedUser={setAuthenticatedUser}/>
           </Route>
           <Route path='/recycle'>
-            <Recycle />
+            <Recycle AuthenticatedUser={AuthenticatedUser}
+            setAuthenticatedUser={setAuthenticatedUser}/>
           </Route>
         </Switch>
       </Router>
