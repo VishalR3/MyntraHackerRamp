@@ -1,7 +1,7 @@
 import "./Crousel.css";
-
+import image from '../../assets/images/1.webp'
 import { Carousel } from "react-bootstrap";
-import data from './data';
+import data from "../../assets/data.jsx";
 import React from "react";
 
 function CrouselView() {

@@ -3,7 +3,6 @@ import './Login.css'
 import {Form, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import image from "../../assets/LoginMynImg.webp"
 import {useHistory} from 'react-router-dom';
 
 const LoginBox = ({setAuthenticatedUser}) => {

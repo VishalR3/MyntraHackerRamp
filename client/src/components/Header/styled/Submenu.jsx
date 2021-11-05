@@ -6,12 +6,12 @@ import {useHistory} from 'react-router-dom';
 
 const Submenu = (props) => {
     const isHovering=props.isHovering;
+    const history = useHistory();
 
     const handleLogout = () => {
         props.setAuthenticatedUser({});
+        history.push('/')
     }
-
-    const history = useHistory();
 
     const redirectLogin = () => {
         history.push('/login')

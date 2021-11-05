@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import data from "./data";
+import data from "../../assets/data.jsx";
 import "./DealCardViewPort.css";
 import DealCardStyled from '../DealCard/DealCard';
 
