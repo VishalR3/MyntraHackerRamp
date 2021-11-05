@@ -68,7 +68,7 @@ export default function Coin({ selectedValue, setSelectedValue }) {
      */
     let obj;
     const loader = new GLTFLoader();
-    loader.load("./models/Coin.glb", (gltf) => {
+    loader.load("./models/coin.glb", (gltf) => {
       obj = gltf.scene;
       obj.children = obj.children.map((child) => {
         if (child.type === "Mesh") {

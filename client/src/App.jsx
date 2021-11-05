@@ -1,16 +1,17 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./assets/css/style.css";
-import "./App.css"
+import "./App.css";
 import Homepage from "./routes/Homepage";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import DiceGame from "./routes/DiceGame";
 import Gamify from "./routes/Gamify";
 import Recycle from "./routes/Recycle";
-import MyCoins from "./routes/MyCoins"
+import MyCoins from "./routes/MyCoins";
 import { useState, useEffect } from "react";
 import CoinGame from "./routes/CoinGame";
+import GameChoose from "./routes/GameChoose";
 
 function App() {
   const [AuthenticatedUser, setAuthenticatedUser] = useState({});
@@ -34,6 +35,9 @@ function App() {
           <Route path="/coin">
             <CoinGame />
           </Route>
+          <Route path="/chooseGame">
+            <GameChoose />
+          </Route>
           <Route exact path="/">
             <Homepage
               AuthenticatedUser={AuthenticatedUser}
@@ -49,13 +53,17 @@ function App() {
           <Route path="/gamify">
             <Gamify />
           </Route>
-          <Route path='/myCoins'>
-            <MyCoins AuthenticatedUser={AuthenticatedUser}
-            setAuthenticatedUser={setAuthenticatedUser}/>
+          <Route path="/myCoins">
+            <MyCoins
+              AuthenticatedUser={AuthenticatedUser}
+              setAuthenticatedUser={setAuthenticatedUser}
+            />
           </Route>
-          <Route path='/recycle'>
-            <Recycle AuthenticatedUser={AuthenticatedUser}
-            setAuthenticatedUser={setAuthenticatedUser}/>
+          <Route path="/recycle">
+            <Recycle
+              AuthenticatedUser={AuthenticatedUser}
+              setAuthenticatedUser={setAuthenticatedUser}
+            />
           </Route>
         </Switch>
       </Router>
