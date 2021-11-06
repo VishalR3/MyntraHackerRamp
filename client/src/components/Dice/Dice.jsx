@@ -74,7 +74,7 @@ export default function Dice({ selectedValue, setSelectedValue }) {
      */
     let obj;
     let loader = new GLTFLoader();
-    loader.load("./models/Dice.glb", (gltf) => {
+    loader.load("./models/dice.glb", (gltf) => {
       obj = gltf.scene;
       obj.children = obj.children.map((child) => {
         if (child.type === "Mesh") {
