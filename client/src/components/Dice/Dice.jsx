@@ -7,6 +7,7 @@ import * as OIMO from "oimo";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { incrementWinCount } from "../../utils/features/gameSlice";
+import axios from 'axios'
 // import diceModel from "../assets/models/dice.glb";
 
 export default function Dice({ selectedValue, setSelectedValue }) {
