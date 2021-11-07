@@ -12,9 +12,15 @@ import MyCoins from "./routes/MyCoins";
 import { useState, useEffect } from "react";
 import CoinGame from "./routes/CoinGame";
 import GameChoose from "./routes/GameChoose";
+import axios from 'axios'
 
 function App() {
   const [AuthenticatedUser, setAuthenticatedUser] = useState({});
+
+  axios.defaults.withCredentials=true;
+    const headers = {
+        "Content-Type": "application/json"
+    }
 
   useEffect(() => {
     const user = window.localStorage.getItem("userData");
@@ -30,10 +36,10 @@ function App() {
       <Router>
         <Switch>
           <Route path="/dice">
-            <DiceGame />
+            <DiceGame user={AuthenticatedUser} setUser={setAuthenticatedUser}/>
           </Route>
           <Route path="/coin">
-            <CoinGame />
+            <CoinGame user={AuthenticatedUser} setUser={setAuthenticatedUser}/>
           </Route>
           <Route path="/chooseGame">
             <GameChoose />

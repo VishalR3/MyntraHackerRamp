@@ -110,10 +110,34 @@ app.post('/login', (req, res) => {
     console.log("finish")
 })
 
+app.post('/userData', (req, res) => {
+  const username=JSON.parse(Object.keys(req.body)[0])['username'];
+  User.findOne({username: username}, (err, user) => {
+        if(user){
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+            res.setHeader('Access-Control-Allow-Credentials', true)
+            res.json({
+                success: true, 
+                message: 'Passed User Data', 
+                user: user
+            });
+        }
+        else{
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+            res.setHeader('Access-Control-Allow-Credentials', true)
+            res.json({message:"User Not Found"});
+        }
+  })
+})
+
 app.post('/updateCoins', (req, res) => {
     console.log(req.body)
-    ///const userData=JSON.parse(Object.keys(req.body)[0]);
-    userData=req.body;
+    const userData=JSON.parse(Object.keys(req.body)[0]);
+    //userData=req.body;
     const username=userData["username"];
     const updatedCoins=userData["coins"];
     const description=userData["description"]
@@ -146,7 +170,7 @@ app.post('/updateCoins', (req, res) => {
               res.setHeader('Content-Type', 'application/json');
               res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
               res.setHeader('Access-Control-Allow-Credentials', true)
-              res.json({message: "Coins Updated"});
+              res.json({message: "Coins Updated", user:user});
             }
           }); 
         }
@@ -168,6 +192,32 @@ app.post('/transactions', (req, res) => {
           success: true, 
           message: 'Transaction Logs successfully fetched', 
           doc: doc
+            });
+    }
+    else{
+      res.statusCode=500;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.setHeader('Access-Control-Allow-Credentials', true)
+      res.json({message: err});
+    }
+  })
+})
+
+app.post('/updateWallet', (req, res) => {
+  const userData=JSON.parse(Object.keys(req.body)[0]);
+  const username=userData['username'];
+  const address=userData['address'];
+  User.findOneAndUpdate({username: username}, {wallet: address},(err, user) => {
+    if(user){
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.setHeader('Access-Control-Allow-Credentials', true)
+      res.json({
+          success: true, 
+          message: 'Wallet Updated', 
+          user: user
             });
     }
     else{

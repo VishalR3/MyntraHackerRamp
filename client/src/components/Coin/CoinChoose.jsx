@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { incrementRound } from "../../utils/features/gameSlice";
+import {useHistory} from 'react-router-dom';
 
 export default function CoinChoose({ selectedValue, setSelectedValue }) {
   const coinValues = ["Head", "Tail"];
@@ -7,9 +8,16 @@ export default function CoinChoose({ selectedValue, setSelectedValue }) {
   const rounds = useSelector((state) => state.game.rounds);
   const winCount = useSelector((state) => state.game.winCount);
   const StartRound = (value) => {
+    console.log(value)
     dispatch(incrementRound());
     setSelectedValue(value);
   };
+
+  const history = useHistory();
+  const redirectMyCoins = () => {
+    history.push('/myCoins')
+  }
+
   return (
     <>
       <div className="screenCenter">
@@ -40,7 +48,7 @@ export default function CoinChoose({ selectedValue, setSelectedValue }) {
           {rounds > 0 ? (
             <div className="footer text-center">
               <h4>You have won {winCount} times</h4>
-              <div className="btn btn-success">End Game</div>
+              <div className="btn btn-success" onClick={redirectMyCoins}>End Game</div>
             </div>
           ) : (
             ""

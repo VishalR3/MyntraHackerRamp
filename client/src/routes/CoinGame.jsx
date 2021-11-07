@@ -2,7 +2,7 @@ import { useState } from "react";
 import Coin from "../components/Coin/Coin";
 import CoinChoose from "../components/Coin/CoinChoose";
 
-export default function CoinGame() {
+export default function CoinGame(props) {
   const [selectedValue, setSelectedValue] = useState(-1);
   const [round, setRound] = useState(1);
   return (
@@ -17,6 +17,8 @@ export default function CoinGame() {
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
           key={round}
+          user={props.user}
+          setUser={props.setUser}
         />
       )}
     </>

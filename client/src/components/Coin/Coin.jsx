@@ -6,13 +6,15 @@ import { gsap } from "gsap";
 import * as OIMO from "oimo";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementWinCount } from "../../utils/features/gameSlice";
+import axios from 'axios';
 
-export default function Coin({ selectedValue, setSelectedValue }) {
+export default function Coin({ selectedValue, setSelectedValue, user, setUser }) {
   const diceRef = useRef(null);
   const [coinValue, setCoinValue] = useState(-1);
   const [win, setWin] = useState(-1);
   const rounds = useSelector((state) => state.game.rounds);
   const winCount = useSelector((state) => state.game.winCount);
+  const [mynCoin, setMynCoin] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     let width = window.innerWidth;
@@ -39,6 +41,32 @@ export default function Coin({ selectedValue, setSelectedValue }) {
       pos: [0, -0.4, 0],
       density: 1,
     });
+
+    axios.defaults.withCredentials=true;
+    const headers = {
+        "Content-Type": "application/json"
+    }
+
+    const updateCoins = (x) => {
+      var data = {
+        username: user.username,
+        coins: Number(user.coins+x),
+        description: {
+          stat: (win)?'won':'lose',
+          game: 'coin'
+        },
+        debit: (x===-2)?2:0,
+        credit: (x===4)?4:0
+      }
+      data = JSON.stringify(data)
+      axios.post("http://localhost:3001/updateCoins", data, headers)
+      .then((res, err) => {
+          setUser(res.data.user);
+      })
+      .catch(function (error) {
+            alert(error.response.data.message);
+        });
+  }
 
     const coinOptions = {
       type: "box",
@@ -206,9 +234,13 @@ export default function Coin({ selectedValue, setSelectedValue }) {
           if (selectedValue === 1) {
             console.log(`You Win`);
             setWin(1);
+            setMynCoin(4);
+            updateCoins(4);
             dispatch(incrementWinCount());
           } else {
             setWin(0);
+            setMynCoin(-2);
+            updateCoins(-2);
             console.log(`You Lose`);
           }
         } else {
@@ -216,10 +248,14 @@ export default function Coin({ selectedValue, setSelectedValue }) {
           console.log("You Got Head");
           if (selectedValue === 0) {
             setWin(1);
+            setMynCoin(4);
+            updateCoins(4);
             dispatch(incrementWinCount());
             console.log(`You Win`);
           } else {
             setWin(0);
+            setMynCoin(-2)
+            updateCoins(-2);
             console.log(`You Lose`);
           }
         }

@@ -5,6 +5,7 @@ import {BsInfoCircle} from 'react-icons/bs'
 import axios from 'axios';
 import './myCoins.css'
 import Transaction from './Transaction';
+import WalletCardEthers from '../WalletCardEthers/WalletCardEthers'
 
 const CoinData = (props) => {
 
@@ -47,6 +48,7 @@ const CoinData = (props) => {
                 padding:20,
                 textAlign:'center'
                 }}>
+                <WalletCardEthers user={props.user} setUser={props.setUser}/>
                 <div className='points-label'
                 style={{
                     fontSize: 15,

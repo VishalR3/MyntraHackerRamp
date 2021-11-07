@@ -208,6 +208,31 @@ export default function Dice({ selectedValue, setSelectedValue }) {
       // arrowHelper.visible = true;
 
       // calculate objects intersecting the picking ray
+      axios.defaults.withCredentials=true;
+    const headers = {
+        "Content-Type": "application/json"
+    }
+
+    const updateCoins = (x) => {
+      var data = {
+        username: user.username,
+        coins: Number(user.coins+x),
+        description: {
+          stat: (win)?'won':'lose',
+          game: 'dice'
+        },
+        debit: (x===-2)?2:0,
+        credit: (x===4)?4:0
+      }
+      data = JSON.stringify(data)
+      axios.post("http://localhost:3001/updateCoins", data, headers)
+      .then((res, err) => {
+          setUser(res.data.user);
+      })
+      .catch(function (error) {
+            alert(error.response.data.message);
+        });
+  }
       if (obj) {
         let intersects = raycaster.intersectObjects(obj.children, true);
 
@@ -219,9 +244,11 @@ export default function Dice({ selectedValue, setSelectedValue }) {
           if (topValue === selectedValue) {
             console.log(`You Win`);
             setWin(1);
+            updateCoins(12);
             dispatch(incrementWinCount());
           } else {
             setWin(0);
+            updateCoins(-2)
             console.log(`You Lose`);
           }
         } else if (intersects[3].object.name.includes("Dot")) {
@@ -230,10 +257,12 @@ export default function Dice({ selectedValue, setSelectedValue }) {
           console.log(`You Got ${topValue}`);
           if (topValue === selectedValue) {
             setWin(1);
+            updateCoins(12);
             dispatch(incrementWinCount());
             console.log(`You Win`);
           } else {
             setWin(0);
+            updateCoins(-2)
             console.log(`You Lose`);
           }
         }

@@ -16,7 +16,7 @@ const userSchema = new Schema({
     },
     coins: {
         type: Number,
-        default: 0
+        default: 10
     },
     wallet: {
         type: String,
