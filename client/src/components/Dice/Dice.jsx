@@ -335,7 +335,9 @@ export default function Dice({ selectedValue, setSelectedValue, user, setUser })
           {diceValue !== 0 ? (
             <div className="coinValue">You Got {diceValue}</div>
           ) : (
-            ""
+            <div className="mt-3">
+              <b>Double Click to throw Dice Up when its resting</b>
+            </div>
           )}
           {win !== -1 ? (
             <div className="winStat">You {win === 0 ? "Lose" : "Win"}</div>

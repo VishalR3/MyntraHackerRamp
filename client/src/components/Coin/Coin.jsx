@@ -307,14 +307,16 @@ export default function Coin({ selectedValue, setSelectedValue, user, setUser })
           <div className="roundNo">Round: {rounds}</div>
           <div className="winCount">Wins: {winCount}</div>
           <div className="betValue">
-            You Chose {selectedValue === 0 ? "Head" : "Tail"}
+            You Chose <b>{selectedValue === 0 ? "Head" : "Tail"}</b>
           </div>
           {coinValue !== -1 ? (
             <div className="coinValue">
-              You Got {coinValue === 0 ? "Head" : "Tail"}
+              You Got <b>{coinValue === 0 ? "Head" : "Tail"}</b>
             </div>
           ) : (
-            ""
+            <div className="mt-3">
+              <b>Double Click to Flip Coin when its resting</b>
+            </div>
           )}
           {win !== -1 ? (
             <div className="winStat">You {win === 0 ? "Lose" : "Win"}</div>

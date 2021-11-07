@@ -151,6 +151,9 @@ const Gamify = () => {
 
     //Controls
     let controls = new OrbitControls(camera, domElement);
+    controls.minDistance = 0;
+    controls.maxDistance = 20;
+    controls.maxPolarAngle = Math.PI / 2;
     controls.update();
 
     let isGameOver = false;
@@ -186,11 +189,15 @@ const Gamify = () => {
           intersects[i].object.name.includes("BoardGames") ||
           intersects[i].object.name.includes("Text")
         ) {
+          isGameOver = true;
+          window.removeEventListener("mousedown", castRay);
           history.push("/chooseGame");
         } else if (
           intersects[i].object.name.includes("BoardRecycle") ||
           intersects[i].object.name.includes("Text001")
         ) {
+          isGameOver = true;
+          window.removeEventListener("mousedown", castRay);
           history.push("/recycle");
         }
       }
