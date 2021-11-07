@@ -10,7 +10,7 @@ import { incrementWinCount } from "../../utils/features/gameSlice";
 import axios from 'axios'
 // import diceModel from "../assets/models/dice.glb";
 
-export default function Dice({ selectedValue, setSelectedValue }) {
+export default function Dice({ selectedValue, setSelectedValue, user, setUser }) {
   const diceRef = useRef(null);
   const [diceValue, setDiceValue] = useState(0);
   const [win, setWin] = useState(-1);
